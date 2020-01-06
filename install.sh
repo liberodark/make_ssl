@@ -1,3 +1,20 @@
+#!/bin/bash
+#
+# About: Install NRPE automatically
+# Author: liberodark
+# Thanks : frju365, Booti386, erdnaxeli
+# License: GNU GPLv3
+
+version="0.9.4"
+
+echo "Welcome on NRPE Install Script $version"
+
+#=================================================
+# RETRIEVE ARGUMENTS FROM THE MANIFEST AND VAR
+#=================================================
+
+distribution=$(cat /etc/*release | grep "PRETTY_NAME" | sed 's/PRETTY_NAME=//g' | sed 's/["]//g' | awk '{print $1}')
+
 name=my_domain_name
 country_code=FR
 country=France
@@ -9,6 +26,7 @@ dns_3=my_website.com
 mail=my@email.com
 rsa=2048
 
+ssl_alt_name(){
 openssl req -new -sha256 -nodes -out \*."$name".csr -newkey rsa:"$rsa" -keyout \*."$name".key -config <(
 cat <<-EOF
 [req]
@@ -36,3 +54,4 @@ DNS.2 = "$dns_2"
 DNS.3 = "$dns_3"
 EOF
 )
+      }
