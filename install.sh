@@ -7,7 +7,7 @@
 
 version="0.0.1"
 
-echo "Welcome on NRPE Install Script $version"
+echo "Welcome on Make SSL Script $version"
 
 #=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST AND VAR
