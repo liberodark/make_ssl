@@ -1,11 +1,11 @@
 #!/bin/bash
 #
-# About: Install NRPE automatically
+# About: Create SSL Easily
 # Author: liberodark
-# Thanks : frju365, Booti386, erdnaxeli
+# Thanks : *
 # License: GNU GPLv3
 
-version="0.9.4"
+version="0.0.1"
 
 echo "Welcome on NRPE Install Script $version"
 
