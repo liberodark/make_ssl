@@ -75,6 +75,19 @@ EOF
 )
 }
 
+ssl_simple(){
+openssl req \
+	-newkey rsa:"$rsa" -nodes -keyout "$name".key \
+        -out "$name".csr \
+        -subj "/C=$country_code/ST=$country/L=$city/O=$organisation/OU=$organisation/emailAddress=$mail/CN=$name.fr"
+
+openssl req \
+        -key "$name".key \
+        -new -out "$name".csr \
+        -subj "/C=$country_code/ST=$country/L=$city/O=$organisation/OU=$organisation/emailAddress=$mail/CN=$name.fr"
+
+}
+
 #==============================================
 # MAKE SSL
 #==============================================
