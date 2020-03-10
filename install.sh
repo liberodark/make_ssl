@@ -54,7 +54,6 @@ EOF
 )
 }
 
-
 ssl_no_alt_name(){
 openssl req -new -sha256 -nodes -out "$name".csr -newkey rsa:"$rsa" -keyout "$name".key -config <(
 cat <<-EOF
