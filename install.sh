@@ -61,7 +61,6 @@ cat <<-EOF
 default_bits = "$rsa"
 prompt = no
 default_md = sha256
-req_extensions = req_ext
 distinguished_name = dn
 
 [ dn ]
@@ -72,12 +71,6 @@ O="$organisation"
 OU="$organisation"
 emailAddress="$mail"
 CN = "$dns_1"
-
-[ req_ext ]
-subjectAltName = @alt_names
-
-[ alt_names ]
-DNS.1 = "$dns_1"
 EOF
 )
 
