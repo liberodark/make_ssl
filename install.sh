@@ -2,18 +2,16 @@
 #
 # About: Create SSL Easily
 # Author: liberodark
-# Thanks : *
+# Thanks :
 # License: GNU GPLv3
 
-version="0.0.1"
+version="0.0.2"
 
 echo "Welcome on Make SSL Script $version"
 
 #=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST AND VAR
 #=================================================
-
-distribution=$(cat /etc/*release | grep "PRETTY_NAME" | sed 's/PRETTY_NAME=//g' | sed 's/["]//g' | awk '{print $1}')
 
 name=my_domain_name
 country_code=FR
@@ -24,7 +22,7 @@ dns_1=my_website.com
 dns_2=my_website.com
 dns_3=my_website.com
 mail=my@email.com
-rsa=2048
+rsa=4096
 
 ssl_alt_name(){
 openssl req -new -sha256 -nodes -out \*."$name".csr -newkey rsa:"$rsa" -keyout \*."$name".key -config <(
@@ -54,4 +52,45 @@ DNS.2 = "$dns_2"
 DNS.3 = "$dns_3"
 EOF
 )
-      }
+}
+
+
+ssl_no_alt_name(){
+openssl req -new -sha256 -nodes -out "$name".csr -newkey rsa:"$rsa" -keyout "$name".key -config <(
+cat <<-EOF
+[req]
+default_bits = "$rsa"
+prompt = no
+default_md = sha256
+req_extensions = req_ext
+distinguished_name = dn
+
+[ dn ]
+C="$country_code"
+ST="$country"
+L="$city"
+O="$organisation"
+OU="$organisation"
+emailAddress="$mail"
+CN = "$dns_1"
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = "$dns_1"
+EOF
+)
+
+#==============================================
+# MAKE SSL
+#==============================================
+
+while true; do
+    read -r -p "Do you want make ssl certificat with alt name ?" yn
+    case $yn in
+        [Yy]* ) ssl_alt_name; break;;
+        [Nn]* ) ssl_no_alt_name; break;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
