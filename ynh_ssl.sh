@@ -10,6 +10,12 @@ version="0.0.1"
 echo "Welcome on YunoHost SSL Import Script $version"
 
 #=================================================
+# CHECK ROOT
+#=================================================
+
+if [[ $(id -u) -ne 0 ]] ; then echo "Please run as root" ; exit 1 ; fi
+
+#=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST AND VAR
 #=================================================
 
