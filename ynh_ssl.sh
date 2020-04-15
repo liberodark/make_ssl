@@ -21,16 +21,16 @@ if [[ $(id -u) -ne 0 ]] ; then echo "Please run as root" ; exit 1 ; fi
 
 domain="my_website"
 
-cd /etc/yunohost/certs/"$domain"/ || exit
-
 mkdir /etc/yunohost/certs/"$domain"/ae_certs
-mv ssl.key ssl.crt /etc/yunohost/certs/"$domain"/ae_certs/
+mv ca.crt ssl.key ssl.crt /etc/yunohost/certs/"$domain"/ae_certs/
+
+cd /etc/yunohost/certs/"$domain"/ || exit
 
 mkdir yunohost_self_signed
 mv *.pem *.cnf yunohost_self_signed/
 
 # Make a crt.pem for Windows CA / Certificate
-cat ca.*.base64.cer "$domain".cer | tee crt.pem
+cat ae_certs/ssl.crt ae_certs/ca.pem | tee crt.pem
 
 # Make a crt.pem for Gandhi CA / Certificate
 cat ae_certs/ssl.crt ae_certs/intermediate_ca.pem ae_certs/ca.pem | sudo tee crt.pem
