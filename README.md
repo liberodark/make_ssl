@@ -2,7 +2,7 @@
 Make SSL is a script for generate SSL certificate
 
 
-## How to Work
+## How to Work : ynh_ssl.sh
 
 ```
 mv certnew.cer ssl.cer
