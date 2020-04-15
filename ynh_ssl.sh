@@ -19,7 +19,7 @@ if [[ $(id -u) -ne 0 ]] ; then echo "Please run as root" ; exit 1 ; fi
 # RETRIEVE ARGUMENTS FROM THE MANIFEST AND VAR
 #=================================================
 
-domain="domain"
+domain="my_domain"
 
 mkdir /etc/yunohost/certs/"$domain"/ae_certs
 mv ca.pem ssl.key ssl.cer /etc/yunohost/certs/"$domain"/ae_certs/
