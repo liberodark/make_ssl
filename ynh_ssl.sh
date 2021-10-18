@@ -21,12 +21,12 @@ if [[ $(id -u) -ne 0 ]] ; then echo "Please run as root" ; exit 1 ; fi
 
 domain="my_domain"
 
-mkdir /etc/yunohost/certs/"$domain"/ae_certs
+mkdir -p /etc/yunohost/certs/"$domain"/ae_certs
 mv ca.pem ssl.key ssl.cer /etc/yunohost/certs/"$domain"/ae_certs/
 
 cd /etc/yunohost/certs/"$domain"/ || exit
 
-mkdir yunohost_self_signed
+mkdir -p yunohost_self_signed
 mv *.pem *.cnf yunohost_self_signed/
 
 # Make a crt.pem for Windows CA / Certificate
