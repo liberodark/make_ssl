@@ -5,7 +5,7 @@
 # Thanks :
 # License: GNU GPLv3
 
-version="0.0.2"
+version="0.0.3"
 
 echo "Welcome on Make SSL Script $version"
 
@@ -20,12 +20,11 @@ city=Paris
 organisation=My_Company
 dns_1=my_website.com
 dns_2=my_website.com
-dns_3=my_website.com
 mail=my@email.com
-rsa=4096
+curve=prime256v1
 
 ssl_alt_name(){
-openssl req -new -sha256 -nodes -out \*."$name".csr -newkey rsa:"$rsa" -keyout \*."$name".key -config <(
+openssl req -new -sha256 -nodes -out "$name".csr -newkey ec -pkeyopt ec_paramgen_curve:"$curve" -keyout "$name".key -config <(
 cat <<-EOF
 [req]
 default_bits = "$rsa"
@@ -49,13 +48,12 @@ subjectAltName = @alt_names
 [ alt_names ]
 DNS.1 = "$dns_1"
 DNS.2 = "$dns_2"
-DNS.3 = "$dns_3"
 EOF
 )
 }
 
 ssl_no_alt_name(){
-openssl req -new -sha256 -nodes -out "$name".csr -newkey rsa:"$rsa" -keyout "$name".key -config <(
+openssl req -new -sha256 -nodes -out "$name".csr -newkey ec -pkeyopt ec_paramgen_curve:"$curve" -keyout "$name".key -config <(
 cat <<-EOF
 [req]
 default_bits = "$rsa"
@@ -77,7 +75,7 @@ EOF
 
 ssl_simple(){
 openssl req \
-	-newkey rsa:"$rsa" -nodes -keyout "$name".key \
+	-newkey ec -pkeyopt ec_paramgen_curve:"$curve" -nodes -keyout "$name".key \
         -out "$name".csr \
         -subj "/C=$country_code/ST=$country/L=$city/O=$organisation/OU=$organisation/emailAddress=$mail/CN=$name.fr"
 
