@@ -27,7 +27,6 @@ ssl_alt_name(){
 openssl req -new -sha256 -nodes -out "$name".csr -newkey ec -pkeyopt ec_paramgen_curve:"$curve" -keyout "$name".key -config <(
 cat <<-EOF
 [req]
-default_bits = "$rsa"
 prompt = no
 default_md = sha256
 req_extensions = req_ext
@@ -56,7 +55,6 @@ ssl_no_alt_name(){
 openssl req -new -sha256 -nodes -out "$name".csr -newkey ec -pkeyopt ec_paramgen_curve:"$curve" -keyout "$name".key -config <(
 cat <<-EOF
 [req]
-default_bits = "$rsa"
 prompt = no
 default_md = sha256
 distinguished_name = dn
